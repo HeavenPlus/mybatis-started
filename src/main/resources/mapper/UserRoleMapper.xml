@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.heaven.dao.mapper.IUserRoleDao">
+
+    <resultMap id="userRoleMap" type="com.heaven.dao.vo.UserRoleVO">
+        <result property="id" column="id"></result>
+        <association property="user" column="user_id"
+                     select="com.heaven.dao.mapper.IUserDao.findById">
+            <result property="id" column="user_id"></result>
+            <result property="name" column="name"></result>
+        </association>
+        <association property="role" column="role_id"
+                     select="com.heaven.dao.mapper.IRoleDao.findById">
+            <result property="id" column="role_id"></result>
+            <result property="roleName" column="role_name"></result>
+        </association>
+    </resultMap>
+
+    <select id="findAllUserRole" resultMap="userRoleMap">
+        select * from user_role
+    </select>
+</mapper>

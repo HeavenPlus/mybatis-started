@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.heaven.dao.mapper.IUserDao">
+
+    <resultMap id="userMap" type="com.heaven.dao.vo.UserVO">
+        <result property="id" column="id"></result>
+        <result property="name" column="name"></result>
+        <collection property="orders" column="id" javaType="list"
+                    select="com.heaven.dao.mapper.IOrderDao.findByUserId">
+            <result property="id" column="orders.id"></result>
+            <result property="title" column="title"></result>
+        </collection>
+    </resultMap>
+
+    <select id="findAll" resultType="com.heaven.dao.pojo.User">
+        select * from user
+    </select>
+    <select id="findById" resultType="com.heaven.dao.pojo.User">
+        select * from user where id = #{id}
+    </select>
+
+    <select id="findUserAndOrder" resultMap="userMap">
+        select * from user
+    </select>
+</mapper>
